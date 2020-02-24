@@ -4,7 +4,7 @@ use hashes::{sha256d, Hash};
 
 use util;
 use util::Error::{BlockProofOfWorkError, BlockTargetError};
-use util::hash::{BlockchainHash, MerkleRoot, blockchain_merke_root};
+use util::hash::{BlockchainHash, MerkleRoot, blockchain_merkle_root};
 use util::uint::Uint256;
 
 use blockdata::transaction::Transaction;
@@ -108,7 +108,7 @@ impl BlockHeader {
     }
 
     /// Validate the block proof of work
-    pub fn validate_pow(&self, target_required: &Uint256) -> Result<(), util::Error> {
+    pub fn validate_pow_of_block(&self, target_required: &Uint256) -> Result<(), util::Error> {
         use byteorder::{ByteOrder, LittleEndian};
 
         let target =&self.compute_target();
@@ -123,8 +123,7 @@ impl BlockHeader {
     }
 
     /// Return the total work of the block
-    pub fn total_work(&self) -> Uint256 {
-        // 2**256 / (target + 1) == ~target / (target+1) + 1    (eqn shamelessly stolen from bitcoind)
+    pub fn block_total_work(&self) -> Uint256 {
         let mut ret = !self.target();
         let mut ret1 = self.target();
         ret1.increment();
@@ -134,7 +133,7 @@ impl BlockHeader {
     }
 
     /// Construct the next block
-    pub fn next(&self, value: T) -> Block {
+    pub fn construct_next(&self, value: T) -> Block {
         // implement
     }
 }

@@ -1,7 +1,6 @@
 /// Hash functions
 
 use std::default::Default;
-
 use hashes::{sha256d, Hash};
 
 /// Any collection of objects for which a merkle root makes sense to be calculated
